@@ -1281,6 +1281,20 @@ img { max-width: 100%; display: block; }
   margin-top: 12px;
 }
 
+.form-error {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+}
+
 /* ===========================
    FOOTER
 =========================== */
