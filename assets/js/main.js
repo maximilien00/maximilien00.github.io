@@ -207,21 +207,38 @@
     counters.forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Contact form (client-side only) ── */
+  /* ── Contact form ── */
   (function initForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
+    const error = form.querySelector('.form-error');
+    if (error) { error.style.display = 'none'; }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const btn = form.querySelector('[type="submit"]');
       const success = form.querySelector('.form-success');
       btn.disabled = true;
       btn.textContent = 'Envoi en cours…';
-      setTimeout(function () {
-        btn.style.display = 'none';
-        if (success) { success.style.display = 'flex'; }
-        form.reset();
-      }, 1200);
+      if (error) { error.style.display = 'none'; }
+      fetch('https://formspree.io/rathm@3il.fr', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (response) {
+        if (response.ok) {
+          btn.style.display = 'none';
+          if (success) { success.style.display = 'flex'; }
+          form.reset();
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Envoyer le message';
+          if (error) { error.style.display = 'flex'; }
+        }
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Envoyer le message';
+        if (error) { error.style.display = 'flex'; }
+      });
     });
   })();
 
